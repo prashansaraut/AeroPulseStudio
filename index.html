@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AeroPulse Studio — Bespoke Wireless Audio Gear Configurator & Interactive Acoustic Experience. Built with Vanilla JavaScript, HTML5 & CSS3.">
+  <meta name="author" content="Prashansa Raut">
+  <title>AeroPulse Studio — Interactive Audio Gear Configurator</title>
+  
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Accessible Skip Link -->
+  <a href="#configurator-section" class="skip-link">Skip to Configurator</a>
+
+  <!-- Navigation Bar -->
+  <header class="site-header" id="site-header">
+    <div class="nav-container wrap">
+      <a href="#" class="brand-logo" aria-label="AeroPulse Studio Home">
+        <div class="logo-icon-wrapper">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+          </svg>
+        </div>
+        <span class="brand-text">AeroPulse<span class="brand-accent">Studio</span></span>
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#configurator-section" class="nav-link active">Studio 360°</a></li>
+          <li><a href="#equalizer-section" class="nav-link">Soundstage EQ</a></li>
+          <li><a href="#specs-section" class="nav-link">Acoustic Specs</a></li>
+          <li><a href="#comparison-section" class="nav-link">Benchmark</a></li>
+          <li><a href="#reviews-section" class="nav-link">Owner Reviews</a></li>
+          <li><a href="#faq-section" class="nav-link">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Audio Haptic Mute/Unmute Toggle -->
+        <button id="sound-effects-toggle" class="icon-btn" aria-label="Toggle Interface Audio Effects" title="UI Sound Effects (Click to Mute/Unmute)">
+          <svg class="sound-on-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+          <svg class="sound-off-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          </svg>
+        </button>
+
+        <!-- Theme Switcher -->
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark and Light Mode" title="Toggle theme">
+          <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="theme-icon moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- USER AUTHENTICATION SECTION (Sign In / User Profile Dropdown) -->
+        <div class="auth-action-wrap" id="auth-action-wrap">
+          <!-- Logged Out State: Sign In Button -->
+          <button type="button" id="open-auth-modal-btn" class="btn btn-sm btn-outline auth-btn" aria-haspopup="dialog">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>Sign In</span>
+          </button>
+
+          <!-- Logged In State: User Avatar & Dropdown (Toggled dynamically via JS) -->
+          <div class="user-profile-dropdown-wrap" id="user-profile-wrap" style="display: none;">
+            <button type="button" id="user-menu-btn" class="user-avatar-btn" aria-haspopup="true" aria-expanded="false" aria-label="Open User Profile Menu">
+              <span class="user-avatar-initials" id="user-avatar-initials">PR</span>
+              <span class="online-indicator"></span>
+            </button>
+
+            <div class="user-dropdown-menu" id="user-dropdown-menu" role="menu" aria-hidden="true">
+              <div class="dropdown-user-header">
+                <strong class="dropdown-user-name" id="dropdown-user-name">Prashansa Raut</strong>
+                <span class="dropdown-user-email" id="dropdown-user-email">prashansa@example.com</span>
+                <span class="user-status-pill">⭐ VIP Studio Member</span>
+              </div>
+              <div class="dropdown-divider"></div>
+              <ul class="dropdown-links" role="none">
+                <li>
+                  <button type="button" class="dropdown-item" id="my-saved-builds-btn" role="menuitem">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                      <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    </svg>
+                    <span>My Saved Builds</span>
+                    <span class="badge-saved-count" id="badge-saved-count">0</span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="dropdown-item" id="open-cart-from-menu" role="menuitem">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                      <line x1="3" y1="6" x2="21" y2="6"></line>
+                    </svg>
+                    <span>My Studio Bag</span>
+                  </button>
+                </li>
+              </ul>
+              <div class="dropdown-divider"></div>
+              <button type="button" class="dropdown-item logout-item" id="sign-out-btn" role="menuitem">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span>Sign Out</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cart Trigger Button -->
+        <button id="cart-toggle-btn" class="icon-btn cart-btn" aria-label="Open Shopping Bag" aria-haspopup="dialog">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-badge" id="cart-counter">0</span>
+        </button>
+
+        <!-- Mobile Menu Hamburger -->
+        <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO & 360 CONFIGURATOR SECTION -->
+    <section class="section configurator-section" id="configurator-section">
+      <div class="wrap">
+        <div class="section-intro text-center">
+          <span class="eyebrow-badge">
+            <span class="pulse-dot"></span> Interactive Customizer 2026
+          </span>
+          <h1 class="main-title">Craft Your Acoustic Masterpiece</h1>
+          <p class="section-desc">
+            Personalize every component of the AeroPulse Pro 7 flagship wireless headphones. Real-time visual rendering, dynamic pricing, and precision engineering.
+          </p>
+
+          <!-- Curated Signature Editions Quick Bar -->
+          <div class="curated-presets-bar">
+            <div class="curated-bar-header">
+              <span class="curated-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                Curated Signature Editions:
+              </span>
+              <span class="curated-hint">Instant 1-Click Aesthetic Harmonies</span>
+            </div>
+            <div class="curated-chips-list" role="radiogroup" aria-label="Curated Signature Editions">
+              <button type="button" class="curated-chip active" data-edition="cyberpunk">
+                <span class="chip-color-dots"><i style="background:#38bdf8"></i><i style="background:#ef4444"></i></span>
+                <span>Cyberpunk Neon</span>
+              </button>
+              <button type="button" class="curated-chip" data-edition="stealth">
+                <span class="chip-color-dots"><i style="background:#1e293b"></i><i style="background:#334155"></i></span>
+                <span>Obsidian Stealth</span>
+              </button>
+              <button type="button" class="curated-chip" data-edition="champagne">
+                <span class="chip-color-dots"><i style="background:#eab308"></i><i style="background:#f59e0b"></i></span>
+                <span>Champagne Royale</span>
+              </button>
+              <button type="button" class="curated-chip" data-edition="nordic">
+                <span class="chip-color-dots"><i style="background:#e2e8f0"></i><i style="background:#94a3b8"></i></span>
+                <span>Nordic Frost</span>
+              </button>
+              <button type="button" class="curated-chip" data-edition="emerald">
+                <span class="chip-color-dots"><i style="background:#059669"></i><i style="background:#f59e0b"></i></span>
+                <span>Imperial Heritage</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="configurator-grid">
+          <!-- LEFT: LIVE VISUAL CANVAS WITH 3D TILT & HOTSPOTS -->
+          <div class="visual-canvas-card" id="visual-canvas-card">
+            <!-- Dynamic Specular Glare Reflection -->
+            <div class="canvas-glare" id="canvas-glare" aria-hidden="true"></div>
+
+            <div class="canvas-top-bar">
+              <div class="status-indicator">
+                <span class="status-dot"></span> Live Vector Engine
+              </div>
+
+              <!-- Web Audio API Synthesizer Toolbar -->
+              <div class="audio-synth-toolbar">
+                <button id="test-audio-btn" class="btn btn-sm btn-ghost" title="Synthesize live ambient sound via Web Audio API">
+                  <svg class="audio-play-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                  <span id="test-audio-label">Synthesize Audio</span>
+                </button>
+                <div class="synth-volume-wrap" id="synth-volume-wrap" title="Web Audio Synthesizer Volume">
+                  <span class="vol-icon">🔊</span>
+                  <input type="range" id="synth-volume-slider" class="range-slider mini-vol" min="0" max="100" value="40" aria-label="Audio Synthesizer Volume">
+                </div>
+              </div>
+            </div>
+
+            <!-- Multi-Perspective View Switcher -->
+            <div class="canvas-view-controls">
+              <span class="view-label">Perspective:</span>
+              <div class="view-switch-btns" role="radiogroup" aria-label="Acoustic View">
+                <button type="button" class="view-btn active" data-view="front" aria-checked="true">
+                  Studio Front
+                </button>
+                <button type="button" class="view-btn" data-view="profile" aria-checked="false">
+                  45° Profile
+                </button>
+                <button type="button" class="view-btn" data-view="exploded" aria-checked="false">
+                  Exploded Anatomy
+                </button>
+              </div>
+            </div>
+
+            <!-- Interactive Headphone SVG Container with 3D Tilt and Hotspots -->
+            <div class="headphone-display-wrapper" id="headphone-wrapper">
+              <div class="soundwave-particles" id="soundwave-particles" aria-hidden="true">
+                <span class="wave-ring ring-1"></span>
+                <span class="wave-ring ring-2"></span>
+                <span class="wave-ring ring-3"></span>
+              </div>
+
+              <!-- Interactive Inspection Hotspots -->
+              <div class="hotspots-container" id="hotspots-container">
+                <button type="button" class="hotspot-pin pin-headband" data-title="Laser Engraved Spring Steel Arch" data-desc="Cold-rolled surgical steel with stepless damping and custom 0.05mm fiber laser engraving." aria-label="Headband Info">
+                  <span class="pin-ring"></span>
+                  <span class="pin-dot">+</span>
+                </button>
+                <button type="button" class="hotspot-pin pin-earcup" data-title="Acoustic Aluminum Resonance Chamber" data-desc="CNC-milled 6061-T6 aluminum shell eliminates internal standing waves for sub-0.04% harmonic distortion." aria-label="Earcup Info">
+                  <span class="pin-ring"></span>
+                  <span class="pin-dot">+</span>
+                </button>
+                <button type="button" class="hotspot-pin pin-cushion" data-title="Magnetic Quick-Swap Cushions" data-desc="Neodymium magnetic ring seal enables instant tool-free swap between CoolMesh and Lambskin." aria-label="Cushion Info">
+                  <span class="pin-ring"></span>
+                  <span class="pin-dot">+</span>
+                </button>
+                <button type="button" class="hotspot-pin pin-driver" data-title="40mm Pure Beryllium Diaphragm" data-desc="Mastering grade transducer with ultra-wide 5Hz–44kHz frequency response." aria-label="Driver Info">
+                  <span class="pin-ring"></span>
+                  <span class="pin-dot">+</span>
+                </button>
+              </div>
+
+              <!-- Hotspot Popover Tooltip -->
+              <div class="hotspot-tooltip" id="hotspot-tooltip" role="tooltip" aria-hidden="true">
+                <h4 class="tooltip-title" id="tooltip-title">Component</h4>
+                <p class="tooltip-desc" id="tooltip-desc">Description</p>
+                <button type="button" class="tooltip-close" id="tooltip-close" aria-label="Close tooltip">×</button>
+              </div>
+
+              <!-- Inline Interactive Vector Artwork -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" class="headphone-svg-interactive" id="headphone-vector" aria-label="Customizable 3D Headphone Visualization">
+                <defs>
+                  <filter id="svg-blur-glow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="30" result="blur" />
+                  </filter>
+                  <linearGradient id="primary-metal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="var(--hp-color-light, #38bdf8)" />
+                    <stop offset="35%" stop-color="var(--hp-color-main, #0284c7)" />
+                    <stop offset="70%" stop-color="var(--hp-color-dark, #0369a1)" />
+                    <stop offset="100%" stop-color="var(--hp-color-main, #0284c7)" />
+                  </linearGradient>
+                  <linearGradient id="chassis-metal-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#94a3b8" />
+                    <stop offset="25%" stop-color="#e2e8f0" />
+                    <stop offset="50%" stop-color="#cbd5e1" />
+                    <stop offset="85%" stop-color="#64748b" />
+                    <stop offset="100%" stop-color="#475569" />
+                  </linearGradient>
+                  <linearGradient id="driver-gold-coil" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fef08a" />
+                    <stop offset="50%" stop-color="#eab308" />
+                    <stop offset="100%" stop-color="#854d0e" />
+                  </linearGradient>
+                  <radialGradient id="cup-face-grad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="var(--hp-color-light, #38bdf8)" stop-opacity="0.95" />
+                    <stop offset="60%" stop-color="var(--hp-color-main, #0284c7)" />
+                    <stop offset="100%" stop-color="var(--hp-color-dark, #0369a1)" />
+                  </radialGradient>
+                  <radialGradient id="mesh-inner-grad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#334155" />
+                    <stop offset="100%" stop-color="#090d16" />
+                  </radialGradient>
+                  <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
+                    <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000000" flood-opacity="0.45" />
+                  </filter>
+                  <pattern id="acoustic-mesh-pattern" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+                    <circle cx="3" cy="3" r="1.2" fill="#475569" opacity="0.6" />
+                  </pattern>
+                </defs>
+
+                <circle id="hp-glow-circle" cx="250" cy="280" r="170" fill="var(--hp-color-main, #0284c7)" opacity="0.25" filter="url(#svg-blur-glow)" />
+
+                <g id="headphone-assembly" filter="url(#soft-shadow)">
+                  <path id="hp-headband-steel" d="M 120 280 C 120 115, 380 115, 380 280" fill="none" stroke="url(#chassis-metal-grad)" stroke-width="18" stroke-linecap="round" />
+                  <path id="hp-headband-cushion" d="M 148 248 C 148 142, 352 142, 352 248" fill="none" stroke="var(--cushion-color, #1e293b)" stroke-width="26" stroke-linecap="round" />
+
+                  <rect id="hp-engraving-badge" x="175" y="108" width="150" height="30" rx="15" fill="#0b1120" stroke="url(#chassis-metal-grad)" stroke-width="2" />
+                  <text id="hp-engraving-text" x="250" y="128" text-anchor="middle" fill="var(--hp-color-light, #38bdf8)" font-family="Outfit, sans-serif" font-size="12" font-weight="700" letter-spacing="3.5">AEROPULSE</text>
+
+                  <g id="hp-yoke-left">
+                    <rect x="110" y="240" width="18" height="50" rx="6" fill="url(#chassis-metal-grad)" />
+                    <path d="M 119 285 C 119 315, 78 322, 78 348" fill="none" stroke="url(#chassis-metal-grad)" stroke-width="9" stroke-linecap="round" />
+                  </g>
+
+                  <g id="hp-yoke-right">
+                    <rect x="372" y="240" width="18" height="50" rx="6" fill="url(#chassis-metal-grad)" />
+                    <path d="M 381 285 C 381 315, 422 322, 422 348" fill="none" stroke="url(#chassis-metal-grad)" stroke-width="9" stroke-linecap="round" />
+                  </g>
+
+                  <g id="hp-exploded-drivers" class="exploded-elements" opacity="0">
+                    <circle cx="84" cy="355" r="24" fill="url(#driver-gold-coil)" stroke="#f59e0b" stroke-width="2" />
+                    <circle cx="84" cy="355" r="16" fill="#0b1120" stroke="#cbd5e1" stroke-width="1.5" />
+                    <circle cx="416" cy="355" r="24" fill="url(#driver-gold-coil)" stroke="#f59e0b" stroke-width="2" />
+                    <circle cx="416" cy="355" r="16" fill="#0b1120" stroke="#cbd5e1" stroke-width="1.5" />
+                  </g>
+
+                  <g id="hp-cushion-left-group" class="cushion-assembly-left">
+                    <ellipse id="hp-cushion-left" cx="84" cy="355" rx="30" ry="65" fill="var(--cushion-color, #1e293b)" stroke="#0b1120" stroke-width="3" />
+                    <ellipse cx="84" cy="355" rx="18" ry="46" fill="url(#mesh-inner-grad)" />
+                    <ellipse cx="84" cy="355" rx="18" ry="46" fill="url(#acoustic-mesh-pattern)" />
+                  </g>
+
+                  <g id="hp-cushion-right-group" class="cushion-assembly-right">
+                    <ellipse id="hp-cushion-right" cx="416" cy="355" rx="30" ry="65" fill="var(--cushion-color, #1e293b)" stroke="#0b1120" stroke-width="3" />
+                    <ellipse cx="416" cy="355" rx="18" ry="46" fill="url(#mesh-inner-grad)" />
+                    <ellipse cx="416" cy="355" rx="18" ry="46" fill="url(#acoustic-mesh-pattern)" />
+                  </g>
+
+                  <g id="hp-earcup-left" class="earcup-assembly-left">
+                    <ellipse id="hp-cup-shell-left" cx="106" cy="355" rx="36" ry="60" fill="url(#primary-metal-grad)" stroke="#0b1120" stroke-width="4" />
+                    <ellipse id="hp-cup-ring-left" cx="106" cy="355" rx="28" ry="48" fill="none" stroke="var(--accent-ring-color, #f59e0b)" stroke-width="3.5" />
+                    <ellipse id="hp-cup-face-left" cx="106" cy="355" rx="22" ry="38" fill="url(#cup-face-grad)" />
+                    <circle cx="106" cy="355" r="9" fill="#0b1120" stroke="url(#chassis-metal-grad)" stroke-width="2" />
+                    <path d="M 88 320 C 100 310, 118 310, 126 324" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.4" stroke-linecap="round" />
+                  </g>
+
+                  <g id="hp-earcup-right" class="earcup-assembly-right">
+                    <ellipse id="hp-cup-shell-right" cx="394" cy="355" rx="36" ry="60" fill="url(#primary-metal-grad)" stroke="#0b1120" stroke-width="4" />
+                    <ellipse id="hp-cup-ring-right" cx="394" cy="355" rx="28" ry="48" fill="none" stroke="var(--accent-ring-color, #f59e0b)" stroke-width="3.5" />
+                    <ellipse id="hp-cup-face-right" cx="394" cy="355" rx="22" ry="38" fill="url(#cup-face-grad)" />
+                    <circle cx="394" cy="355" r="9" fill="#0b1120" stroke="url(#chassis-metal-grad)" stroke-width="2" />
+                    <path d="M 376 320 C 388 310, 406 310, 414 324" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.4" stroke-linecap="round" />
+                  </g>
+
+                  <g id="hp-soundwave-svg" class="svg-wave-group" opacity="0">
+                    <path class="wave wave-left-1" d="M 40 330 C 26 345, 26 365, 40 380" fill="none" stroke="var(--hp-color-light, #38bdf8)" stroke-width="3" stroke-linecap="round" />
+                    <path class="wave wave-left-2" d="M 24 320 C 6 340, 6 370, 24 390" fill="none" stroke="var(--hp-color-light, #38bdf8)" stroke-width="2.5" stroke-linecap="round" opacity="0.6" />
+                    <path class="wave wave-right-1" d="M 460 330 C 474 345, 474 365, 460 380" fill="none" stroke="var(--hp-color-light, #38bdf8)" stroke-width="3" stroke-linecap="round" />
+                    <path class="wave wave-right-2" d="M 476 320 C 494 340, 494 370, 476 390" fill="none" stroke="var(--hp-color-light, #38bdf8)" stroke-width="2.5" stroke-linecap="round" opacity="0.6" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Interactive Specs Badges at canvas bottom -->
+            <div class="canvas-badges">
+              <div class="mini-spec-badge">
+                <span class="spec-label">Acoustic Driver</span>
+                <strong class="spec-val">40mm Beryllium</strong>
+              </div>
+              <div class="mini-spec-badge">
+                <span class="spec-label">ANC Reduction</span>
+                <strong class="spec-val">-42 dB Hybrid</strong>
+              </div>
+              <div class="mini-spec-badge">
+                <span class="spec-label">Battery Playtime</span>
+                <strong class="spec-val">58 Hours</strong>
+              </div>
+              <div class="mini-spec-badge">
+                <span class="spec-label">Weight</span>
+                <strong class="spec-val">248 Grams</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: INTERACTIVE CONTROL PANEL -->
+          <div class="config-controls-card">
+            <!-- Header & Model Details -->
+            <div class="panel-header">
+              <div class="panel-title-row">
+                <h2 class="product-name">AeroPulse Pro 7</h2>
+                <span class="stock-badge in-stock">
+                  <span class="badge-dot"></span> In Stock & Bespoke Ready
+                </span>
+              </div>
+              <p class="product-tagline">Studio Reference Grade • Spatial Lossless Bluetooth 5.4</p>
+            </div>
+
+            <!-- Config Form Controls (Pure JS Event-Driven) -->
+            <div class="config-modules">
+              <!-- Module 1: Colorways -->
+              <div class="control-group">
+                <div class="group-header">
+                  <label class="group-title" id="color-label">1. Primary Colorway</label>
+                  <span class="selection-name" id="selected-color-name">Cyber Cyan</span>
+                </div>
+                <div class="color-swatches" role="radiogroup" aria-labelledby="color-label">
+                  <button type="button" class="swatch-btn active" data-color="cyan" data-name="Cyber Cyan" data-price="0" aria-checked="true" role="radio" title="Cyber Cyan">
+                    <span class="swatch-preview swatch-cyan"></span>
+                  </button>
+                  <button type="button" class="swatch-btn" data-color="midnight" data-name="Obsidian Matte" data-price="0" aria-checked="false" role="radio" title="Obsidian Matte">
+                    <span class="swatch-preview swatch-midnight"></span>
+                  </button>
+                  <button type="button" class="swatch-btn" data-color="silver" data-name="Titanium Frost" data-price="500" aria-checked="false" role="radio" title="Titanium Frost (+₹500)">
+                    <span class="swatch-preview swatch-silver"></span>
+                  </button>
+                  <button type="button" class="swatch-btn" data-color="gold" data-name="Champagne Luxe" data-price="800" aria-checked="false" role="radio" title="Champagne Luxe (+₹800)">
+                    <span class="swatch-preview swatch-gold"></span>
+                  </button>
+                  <button type="button" class="swatch-btn" data-color="emerald" data-name="Imperial Emerald" data-price="600" aria-checked="false" role="radio" title="Imperial Emerald (+₹600)">
+                    <span class="swatch-preview swatch-emerald"></span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Module 2: Bezel Ring Accent -->
+              <div class="control-group">
+                <div class="group-header">
+                  <label class="group-title" id="accent-label">2. Precision Bezel Ring</label>
+                  <span class="selection-name" id="selected-accent-name">Sunset Gold</span>
+                </div>
+                <div class="pill-options" role="radiogroup" aria-labelledby="accent-label">
+                  <button type="button" class="pill-btn active" data-accent="gold" data-name="Sunset Gold" data-price="0" role="radio" aria-checked="true">
+                    <span class="ring-dot ring-gold"></span> Gold
+                  </button>
+                  <button type="button" class="pill-btn" data-accent="silver" data-name="Chrome Silver" data-price="0" role="radio" aria-checked="false">
+                    <span class="ring-dot ring-silver"></span> Silver
+                  </button>
+                  <button type="button" class="pill-btn" data-accent="crimson" data-name="Ruby Red" data-price="350" role="radio" aria-checked="false">
+                    <span class="ring-dot ring-crimson"></span> Ruby (+₹350)
+                  </button>
+                  <button type="button" class="pill-btn" data-accent="stealth" data-name="Dark Graphite" data-price="0" role="radio" aria-checked="false">
+                    <span class="ring-dot ring-stealth"></span> Graphite
+                  </button>
+                </div>
+              </div>
+
+              <!-- Module 3: Ear Cushions Material -->
+              <div class="control-group">
+                <div class="group-header">
+                  <label class="group-title" id="cushion-label">3. Ergonomic Ear Cushions</label>
+                  <span class="selection-name" id="selected-cushion-name">Cloud Memory Foam</span>
+                </div>
+                <div class="cushion-cards" role="radiogroup" aria-labelledby="cushion-label">
+                  <button type="button" class="cushion-card active" data-cushion="foam" data-name="Cloud Memory Foam" data-cushion-color="#1e293b" data-price="0" role="radio" aria-checked="true">
+                    <div class="cushion-info">
+                      <span class="cushion-title">Memory Foam</span>
+                      <span class="cushion-desc">Plush all-day passive seal</span>
+                    </div>
+                    <span class="cushion-cost">Included</span>
+                  </button>
+                  <button type="button" class="cushion-card" data-cushion="mesh" data-name="Breathable CoolMesh" data-cushion-color="#334155" data-price="650" role="radio" aria-checked="false">
+                    <div class="cushion-info">
+                      <span class="cushion-title">CoolMesh Pro</span>
+                      <span class="cushion-desc">Infused cooling gel for workouts</span>
+                    </div>
+                    <span class="cushion-cost">+₹650</span>
+                  </button>
+                  <button type="button" class="cushion-card" data-cushion="leather" data-name="Italian Lambskin Leather" data-cushion-color="#0f172a" data-price="1200" role="radio" aria-checked="false">
+                    <div class="cushion-info">
+                      <span class="cushion-title">Lambskin Luxe</span>
+                      <span class="cushion-desc">Ultra-soft artisanal grain</span>
+                    </div>
+                    <span class="cushion-cost">+₹1,200</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Module 4: Custom Laser Engraving (Live Reactive DOM text) -->
+              <div class="control-group">
+                <div class="group-header">
+                  <label for="engraving-input" class="group-title">4. Custom Laser Headband Engraving</label>
+                  <span class="char-count" id="engraving-count">9 / 12 chars</span>
+                </div>
+                <div class="engraving-input-wrap">
+                  <input type="text" id="engraving-input" class="form-input" maxlength="12" value="AEROPULSE" placeholder="Your Name or Studio Moniker" aria-describedby="engraving-count">
+                  <button type="button" id="clear-engraving-btn" class="btn btn-sm btn-subtle" title="Reset to default">Reset</button>
+                </div>
+                <p class="input-hint">Precision 0.05mm fiber laser etched onto surgical steel headband arch.</p>
+              </div>
+
+              <!-- Module 5: Add-on Studio Accessories (Checkboxes updating price state) -->
+              <div class="control-group">
+                <label class="group-title">5. Master Accessories & Care</label>
+                <div class="addon-checklist">
+                  <label class="addon-item">
+                    <input type="checkbox" class="addon-checkbox" data-id="dac" data-name="Hi-Res 384kHz USB-C DAC" data-price="1499">
+                    <span class="checkbox-custom"></span>
+                    <span class="addon-text">
+                      <strong>Audiophile 384kHz DAC Dongle</strong>
+                      <small>Lossless studio decoding for smartphones & laptops</small>
+                    </span>
+                    <span class="addon-price">+₹1,499</span>
+                  </label>
+
+                  <label class="addon-item">
+                    <input type="checkbox" class="addon-checkbox" data-id="stand" data-name="Magnetic Aluminum Headphone Stand" data-price="999">
+                    <span class="checkbox-custom"></span>
+                    <span class="addon-text">
+                      <strong>Aerospace Aluminum Desk Stand</strong>
+                      <small>Solid weighted base with magnetic cable dock</small>
+                    </span>
+                    <span class="addon-price">+₹999</span>
+                  </label>
+
+                  <label class="addon-item">
+                    <input type="checkbox" class="addon-checkbox" data-id="warranty" data-name="2-Year AeroCare No-Fault Protection" data-price="799">
+                    <span class="checkbox-custom"></span>
+                    <span class="addon-text">
+                      <strong>2-Year Extended AeroCare Protection</strong>
+                      <small>Zero-deductible accidental damage & instant replacement</small>
+                    </span>
+                    <span class="addon-price">+₹799</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Price & Purchase Action Footer -->
+            <div class="panel-action-footer">
+              <div class="price-breakdown">
+                <span class="total-label">Total Custom Price</span>
+                <div class="price-display">
+                  <span class="currency-symbol">₹</span>
+                  <span class="price-number" id="live-price-counter">14,999</span>
+                </div>
+                <span class="tax-note">Inclusive of all taxes & free express insured shipping</span>
+              </div>
+
+              <div class="action-buttons">
+                <button type="button" id="add-to-cart-btn" class="btn btn-primary btn-large btn-glow">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                  </svg>
+                  <span>Add Custom Build to Bag</span>
+                </button>
+                <button type="button" id="share-config-btn" class="btn btn-secondary btn-icon-only" title="Copy shareable custom build link">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                  </svg>
+                </button>
+                <button type="button" id="save-config-btn" class="btn btn-secondary btn-icon-only" title="Save this configuration to your account & browser storage">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: INTERACTIVE EQUALIZER & SOUNDSTAGE -->
+    <section class="section equalizer-section" id="equalizer-section">
+      <div class="wrap">
+        <div class="section-intro text-center">
+          <span class="eyebrow-badge">DSP Simulation</span>
+          <h2 class="section-title">Interactive Soundstage Equalizer</h2>
+          <p class="section-desc">
+            Test the on-board 32-bit DSP audio engine. Choose from acoustic master curves or manually dial your preferred acoustic balance.
+          </p>
+        </div>
+
+        <div class="equalizer-dashboard">
+          <!-- Left: Real-time Dynamic Visualizer Bars -->
+          <div class="eq-visualizer-card">
+            <div class="eq-header">
+              <span class="eq-indicator-pill">
+                <span class="sound-wave-icon">
+                  <i></i><i></i><i></i><i></i>
+                </span>
+                Active DSP Curve: <strong id="current-eq-preset-name">Reference Neutral</strong>
+              </span>
+              <button id="toggle-eq-stream-btn" class="btn btn-sm btn-subtle">
+                <span id="eq-stream-text">Pause Animation</span>
+              </button>
+            </div>
+
+            <!-- Animated Bar Spectrum (Controlled via JS) -->
+            <div class="visualizer-spectrum" id="visualizer-spectrum" aria-label="Frequency Spectrum Graphic">
+              <div class="freq-bar" data-index="0" style="--height: 45%;"></div>
+              <div class="freq-bar" data-index="1" style="--height: 52%;"></div>
+              <div class="freq-bar" data-index="2" style="--height: 68%;"></div>
+              <div class="freq-bar" data-index="3" style="--height: 75%;"></div>
+              <div class="freq-bar" data-index="4" style="--height: 58%;"></div>
+              <div class="freq-bar" data-index="5" style="--height: 48%;"></div>
+              <div class="freq-bar" data-index="6" style="--height: 62%;"></div>
+              <div class="freq-bar" data-index="7" style="--height: 70%;"></div>
+              <div class="freq-bar" data-index="8" style="--height: 65%;"></div>
+              <div class="freq-bar" data-index="9" style="--height: 55%;"></div>
+              <div class="freq-bar" data-index="10" style="--height: 48%;"></div>
+              <div class="freq-bar" data-index="11" style="--height: 59%;"></div>
+              <div class="freq-bar" data-index="12" style="--height: 72%;"></div>
+              <div class="freq-bar" data-index="13" style="--height: 64%;"></div>
+              <div class="freq-bar" data-index="14" style="--height: 50%;"></div>
+              <div class="freq-bar" data-index="15" style="--height: 42%;"></div>
+            </div>
+
+            <div class="spectrum-labels">
+              <span>20 Hz (Sub-Bass)</span>
+              <span>1 kHz (Mids & Vocals)</span>
+              <span>20 kHz (Air Treble)</span>
+            </div>
+
+            <div class="eq-acoustic-desc" id="eq-acoustic-desc">
+              Flat, highly disciplined studio curve providing mastering-grade fidelity across the entire audible frequency envelope.
+            </div>
+          </div>
+
+          <!-- Right: Sliders & Preset Buttons -->
+          <div class="eq-controls-card">
+            <h3 class="eq-card-title">DSP Presets</h3>
+            <div class="preset-buttons-grid">
+              <button type="button" class="preset-btn active" data-preset="neutral" data-bass="0" data-mid="0" data-treble="0">
+                <span class="preset-icon">🎯</span>
+                <span class="preset-text">Studio Flat</span>
+              </button>
+              <button type="button" class="preset-btn" data-preset="bass" data-bass="6" data-mid="-1" data-treble="2">
+                <span class="preset-icon">⚡</span>
+                <span class="preset-text">Sub-Bass Punch</span>
+              </button>
+              <button type="button" class="preset-btn" data-preset="vocal" data-bass="-2" data-mid="5" data-treble="3">
+                <span class="preset-icon">🎙️</span>
+                <span class="preset-text">Vocal Clarity</span>
+              </button>
+              <button type="button" class="preset-btn" data-preset="spatial" data-bass="3" data-mid="2" data-treble="5">
+                <span class="preset-icon">🌌</span>
+                <span class="preset-text">3D Spatial Atmos</span>
+              </button>
+            </div>
+
+            <h3 class="eq-card-title" style="margin-top: 1.5rem;">Manual 3-Band Tuning</h3>
+            <div class="eq-slider-group">
+              <div class="slider-row">
+                <div class="slider-labels">
+                  <label for="eq-bass-slider">Bass Boost (60Hz)</label>
+                  <span class="slider-val" id="bass-val-label">0 dB</span>
+                </div>
+                <input type="range" id="eq-bass-slider" class="range-slider" min="-10" max="10" value="0" step="1">
+              </div>
+
+              <div class="slider-row">
+                <div class="slider-labels">
+                  <label for="eq-mid-slider">Mid Presence (1kHz)</label>
+                  <span class="slider-val" id="mid-val-label">0 dB</span>
+                </div>
+                <input type="range" id="eq-mid-slider" class="range-slider" min="-10" max="10" value="0" step="1">
+              </div>
+
+              <div class="slider-row">
+                <div class="slider-labels">
+                  <label for="eq-treble-slider">Treble Air (10kHz)</label>
+                  <span class="slider-val" id="treble-val-label">0 dB</span>
+                </div>
+                <input type="range" id="eq-treble-slider" class="range-slider" min="-10" max="10" value="0" step="1">
+              </div>
+            </div>
+
+            <button type="button" id="reset-eq-btn" class="btn btn-outline btn-sm" style="margin-top: 1rem; width: 100%;">
+              Reset to Factory Zero (Flat)
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: SPECIFICATIONS & FILTER TABS -->
+    <section class="section specs-section" id="specs-section">
+      <div class="wrap">
+        <div class="section-intro text-center">
+          <span class="eyebrow-badge">Technical Anatomy</span>
+          <h2 class="section-title">Engineered to Perfection</h2>
+          <p class="section-desc">Inspect verified hardware measurements, connectivity protocols, and acoustic physics.</p>
+        </div>
+
+        <div class="tabs-container">
+          <div class="tabs-header" role="tablist" aria-label="Specification Categories">
+            <button class="tab-btn active" role="tab" id="tab-btn-acoustics" aria-selected="true" aria-controls="tab-pane-acoustics">
+              Acoustic Drivers
+            </button>
+            <button class="tab-btn" role="tab" id="tab-btn-wireless" aria-selected="false" aria-controls="tab-pane-wireless">
+              Wireless & Bluetooth
+            </button>
+            <button class="tab-btn" role="tab" id="tab-btn-battery" aria-selected="false" aria-controls="tab-pane-battery">
+              Battery & Charging
+            </button>
+            <button class="tab-btn" role="tab" id="tab-btn-materials" aria-selected="false" aria-controls="tab-pane-materials">
+              Chassis Materials
+            </button>
+          </div>
+
+          <div class="tab-content-wrapper">
+            <div class="tab-panel active" id="tab-pane-acoustics" role="tabpanel" aria-labelledby="tab-btn-acoustics">
+              <div class="specs-table-grid">
+                <div class="spec-row"><span class="spec-prop">Transducer Principle</span><span class="spec-data">Dynamic 40mm Vapor-Deposited Pure Beryllium</span></div>
+                <div class="spec-row"><span class="spec-prop">Frequency Response</span><span class="spec-data">5 Hz – 44,000 Hz (Hi-Res Certified)</span></div>
+                <div class="spec-row"><span class="spec-prop">Total Harmonic Distortion</span><span class="spec-data">&lt; 0.04% @ 1 kHz, 100 dB SPL</span></div>
+                <div class="spec-row"><span class="spec-prop">Active Noise Cancellation</span><span class="spec-data">Hybrid 6-Mic Feed-Forward & Feedback DSP (-42dB)</span></div>
+                <div class="spec-row"><span class="spec-prop">Impedance</span><span class="spec-data">32 Ω Passive / Active DSP Amplified</span></div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-pane-wireless" role="tabpanel" aria-labelledby="tab-btn-wireless" hidden>
+              <div class="specs-table-grid">
+                <div class="spec-row"><span class="spec-prop">Bluetooth Version</span><span class="spec-data">Bluetooth 5.4 Low Energy with Auracast™</span></div>
+                <div class="spec-row"><span class="spec-prop">Supported Codecs</span><span class="spec-data">LDAC, aptX Lossless, AAC, SBC, LC3</span></div>
+                <div class="spec-row"><span class="spec-prop">Effective Range</span><span class="spec-data">Up to 25 meters (Line of Sight)</span></div>
+                <div class="spec-row"><span class="spec-prop">Multipoint Connection</span><span class="spec-data">Simultaneous seamless pairing to 2 devices</span></div>
+                <div class="spec-row"><span class="spec-prop">Latency Performance</span><span class="spec-data">32ms Ultra-Low Gaming Mode</span></div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-pane-battery" role="tabpanel" aria-labelledby="tab-btn-battery" hidden>
+              <div class="specs-table-grid">
+                <div class="spec-row"><span class="spec-prop">Playtime (ANC Active)</span><span class="spec-data">Up to 48 Hours Continuous Playback</span></div>
+                <div class="spec-row"><span class="spec-prop">Playtime (ANC Disabled)</span><span class="spec-data">Up to 62 Hours Continuous Playback</span></div>
+                <div class="spec-row"><span class="spec-prop">Fast Quick-Charge</span><span class="spec-data">10 Minutes charge yields 7 Hours listening</span></div>
+                <div class="spec-row"><span class="spec-prop">Full Charge Duration</span><span class="spec-data">75 minutes via USB-C Power Delivery</span></div>
+                <div class="spec-row"><span class="spec-prop">Battery Capacity</span><span class="spec-data">880 mAh Lithium-Polymer cell</span></div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-pane-materials" role="tabpanel" aria-labelledby="tab-btn-materials" hidden>
+              <div class="specs-table-grid">
+                <div class="spec-row"><span class="spec-prop">Headband Chassis</span><span class="spec-data">Cold-Rolled Spring Steel with Anodized Hinges</span></div>
+                <div class="spec-row"><span class="spec-prop">Ear Cup Housing</span><span class="spec-data">CNC Milled Aluminum 6061-T6 alloy</span></div>
+                <div class="spec-row"><span class="spec-prop">Cushion Outer</span><span class="spec-data">Replaceable Magnetic Italian Lambskin / CoolMesh</span></div>
+                <div class="spec-row"><span class="spec-prop">Weight</span><span class="spec-data">248 grams (Lightweight Ergonomic Arch)</span></div>
+                <div class="spec-row"><span class="spec-prop">Water/Sweat Resistance</span><span class="spec-data">IPX4 Splash & Dust Resistant</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: HEAD-TO-HEAD BENCHMARK MATRIX -->
+    <section class="section comparison-section" id="comparison-section">
+      <div class="wrap">
+        <div class="section-intro text-center">
+          <span class="eyebrow-badge">Flagship Benchmark</span>
+          <h2 class="section-title">AeroPulse vs. Industry Heavyweights</h2>
+          <p class="section-desc">See how bespoke craftsmanship and pure beryllium acoustics compare against mass-market consumer headphones.</p>
+        </div>
+
+        <div class="comparison-card">
+          <div class="table-responsive">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th scope="col">Hardware Feature</th>
+                  <th scope="col" class="highlight-col">AeroPulse Pro 7 (Bespoke)</th>
+                  <th scope="col">Sony WH-1000XM5</th>
+                  <th scope="col">Apple AirPods Max</th>
+                  <th scope="col">Bose QC Ultra</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Transducer Principle</strong></td>
+                  <td class="highlight-col"><span class="check-badge">★ Pure Beryllium 40mm</span></td>
+                  <td>Carbon Fiber 30mm</td>
+                  <td>Dynamic PET 40mm</td>
+                  <td>Bio-cellulose 35mm</td>
+                </tr>
+                <tr>
+                  <td><strong>Harmonic Distortion (THD)</strong></td>
+                  <td class="highlight-col"><strong>&lt; 0.04% (Mastering Grade)</strong></td>
+                  <td>&lt; 0.15%</td>
+                  <td>&lt; 0.12%</td>
+                  <td>&lt; 0.18%</td>
+                </tr>
+                <tr>
+                  <td><strong>Personalization & Laser Engraving</strong></td>
+                  <td class="highlight-col"><span class="check-badge">✓ Free Bespoke Laser Etch</span></td>
+                  <td>✕ None</td>
+                  <td>Emoji Only</td>
+                  <td>✕ None</td>
+                </tr>
+                <tr>
+                  <td><strong>Magnetic Quick-Swap Cushions</strong></td>
+                  <td class="highlight-col"><span class="check-badge">✓ Neodymium Magnetic</span></td>
+                  <td>✕ Glued / Non-swappable</td>
+                  <td>✓ Magnetic Fabric</td>
+                  <td>Snap Plastic Clips</td>
+                </tr>
+                <tr>
+                  <td><strong>Battery Playtime (ANC Active)</strong></td>
+                  <td class="highlight-col"><strong>48 Hours</strong></td>
+                  <td>30 Hours</td>
+                  <td>20 Hours</td>
+                  <td>24 Hours</td>
+                </tr>
+                <tr>
+                  <td><strong>Hi-Res Audio Support</strong></td>
+                  <td class="highlight-col"><span class="check-badge">✓ LDAC + aptX Lossless + 3.5mm</span></td>
+                  <td>✓ LDAC Only</td>
+                  <td>✕ AAC Only</td>
+                  <td>aptX Adaptive</td>
+                </tr>
+                <tr>
+                  <td><strong>Direct Launch Price</strong></td>
+                  <td class="highlight-col"><strong class="price-val">₹14,999</strong></td>
+                  <td>₹29,990</td>
+                  <td>₹59,900</td>
+                  <td>₹34,900</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: REVIEWS & INTERACTIVE SUBMISSION MODAL -->
+    <section class="section reviews-section" id="reviews-section">
+      <div class="wrap">
+        <div class="reviews-header-block">
+          <div>
+            <span class="eyebrow-badge">Verified Sound Community</span>
+            <h2 class="section-title">Acoustic Feedback from Owners</h2>
+            <p class="section-desc">Real opinions from audiophiles, music producers, and daily commuters.</p>
+          </div>
+          <div class="review-actions-wrap">
+            <button type="button" id="open-review-modal-btn" class="btn btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+              <span>Write a Review</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Rating Summary Bar -->
+        <div class="rating-overview-card">
+          <div class="score-large-wrap">
+            <span class="score-number" id="average-score-label">4.9</span>
+            <div class="star-row" aria-label="4.9 out of 5 stars">
+              ★★★★★
+            </div>
+            <span class="total-reviews-count" id="total-reviews-label">Based on 128 verified ratings</span>
+          </div>
+
+          <div class="score-bars">
+            <div class="rating-bar-row">
+              <span class="star-level">5 Star</span>
+              <div class="bar-track"><div class="bar-fill" style="width: 88%;"></div></div>
+              <span class="pct">88%</span>
+            </div>
+            <div class="rating-bar-row">
+              <span class="star-level">4 Star</span>
+              <div class="bar-track"><div class="bar-fill" style="width: 9%;"></div></div>
+              <span class="pct">9%</span>
+            </div>
+            <div class="rating-bar-row">
+              <span class="star-level">3 Star</span>
+              <div class="bar-track"><div class="bar-fill" style="width: 2%;"></div></div>
+              <span class="pct">2%</span>
+            </div>
+            <div class="rating-bar-row">
+              <span class="star-level">2 Star</span>
+              <div class="bar-track"><div class="bar-fill" style="width: 1%;"></div></div>
+              <span class="pct">1%</span>
+            </div>
+            <div class="rating-bar-row">
+              <span class="star-level">1 Star</span>
+              <div class="bar-track"><div class="bar-fill" style="width: 0%;"></div></div>
+              <span class="pct">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Reviews Grid (JS injects new cards here) -->
+        <div class="reviews-grid" id="reviews-grid">
+          <article class="review-card">
+            <div class="review-card-top">
+              <div class="reviewer-avatar">RK</div>
+              <div class="reviewer-meta">
+                <h3 class="reviewer-name">Rohan Kulkarni</h3>
+                <span class="reviewer-badge">✓ Verified Audiophile</span>
+              </div>
+              <span class="review-date">2 days ago</span>
+            </div>
+            <div class="review-stars">★★★★★</div>
+            <p class="review-body">
+              "The beryllium driver resolution is otherworldly. I spent 4 hours testing strings and jazz tracks—the separation is as good as ₹50,000 wired open-backs. The laser engraving on the headband looks stunning in person!"
+            </p>
+            <div class="review-tag">Custom Build: Cyber Cyan • CoolMesh</div>
+          </article>
+
+          <article class="review-card">
+            <div class="review-card-top">
+              <div class="reviewer-avatar" style="background: linear-gradient(135deg, #10b981, #06b6d4);">AS</div>
+              <div class="reviewer-meta">
+                <h3 class="reviewer-name">Ananya Sharma</h3>
+                <span class="reviewer-badge">✓ Verified Buyer</span>
+              </div>
+              <span class="review-date">1 week ago</span>
+            </div>
+            <div class="review-stars">★★★★★</div>
+            <p class="review-body">
+              "ANC kills Mumbai local train rumble effortlessly! The battery lasted me an entire trip to Goa without a single top-up. The cart ordering and real-time color customizer on this site were super slick."
+            </p>
+            <div class="review-tag">Custom Build: Obsidian Matte • Lambskin</div>
+          </article>
+
+          <article class="review-card">
+            <div class="review-card-top">
+              <div class="reviewer-avatar" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">VT</div>
+              <div class="reviewer-meta">
+                <h3 class="reviewer-name">Vikram Thakur</h3>
+                <span class="reviewer-badge">✓ Verified Sound Designer</span>
+              </div>
+              <span class="review-date">3 weeks ago</span>
+            </div>
+            <div class="review-stars">★★★★★</div>
+            <p class="review-body">
+              "Using the onboard DSP flat curve for mixing on Ableton Live. Zero latency in low-latency mode and the 3-band EQ simulator is surprisingly responsive. Best purchase in audio gear this year."
+            </p>
+            <div class="review-tag">Custom Build: Titanium Frost • Sunset Gold</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: ACCORDION FAQ WITH REAL-TIME LIVE SEARCH -->
+    <section class="section faq-section" id="faq-section">
+      <div class="wrap wrap-narrow">
+        <div class="section-intro text-center">
+          <span class="eyebrow-badge">Help & Assurance</span>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="section-desc">Instant answers on custom laser fabrication, magnetic cushions, warranty, and zero-latency wired mode.</p>
+        </div>
+
+        <div class="faq-search-wrap">
+          <div class="search-input-box">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="faq-search-input" class="form-input search-input" placeholder="Search questions (e.g. laser, warranty, cable, magnetic, battery...)" aria-label="Search FAQs">
+            <button type="button" id="faq-clear-search-btn" class="clear-search-btn" aria-label="Clear search" style="display: none;">✕</button>
+          </div>
+          <span class="faq-match-count" id="faq-match-count">Showing 4 of 4 questions</span>
+        </div>
+
+        <div class="accordion-group" id="faq-accordion">
+          <div class="accordion-item" data-question="laser engraving fabrication assembly custom">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-ans-1">
+              <span>How long does bespoke laser engraving and cleanroom assembly take?</span>
+              <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="accordion-panel" id="faq-ans-1" hidden>
+              <div class="panel-inner">
+                Every custom AeroPulse unit is assembled by audio technicians in our cleanroom facility within 48 hours. Laser engraving is calibrated down to 0.05mm precision on surgical spring steel. Your tracking link is dispatched immediately via WhatsApp and Email upon quality control pass.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item" data-question="wired professional interface audio cable analog passive">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-ans-2">
+              <span>Can I use AeroPulse wired with my professional audio interface?</span>
+              <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="accordion-panel" id="faq-ans-2" hidden>
+              <div class="panel-inner">
+                Yes! Every unit ships with an oxygen-free 3.5mm analog copper cable and a 6.35mm gold studio adapter. When connected via cable, the unit operates in true zero-latency passive audiophile mode with no battery required.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item" data-question="return policy trial warranty refund custom engraved">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-ans-3">
+              <span>What is the return policy for custom engraved units?</span>
+              <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="accordion-panel" id="faq-ans-3" hidden>
+              <div class="panel-inner">
+                We offer a 14-day Risk-Free Acoustic Trial. Even with custom laser engraving, if you are not blown away by the clarity and staging, we will issue a complete refund and re-house the unit chassis.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item" data-question="cushions detachable magnetic replaceable coolmesh lambskin foam">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-ans-4">
+              <span>Are ear cushions magnetically detachable and replaceable?</span>
+              <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="accordion-panel" id="faq-ans-4" hidden>
+              <div class="panel-inner">
+                Yes! AeroPulse cushions utilize neodymium magnetic rings. You can swap between CoolMesh for summer workouts and Italian Lambskin for long winter flights in less than 3 seconds without any tools.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-empty-search" id="faq-empty-search" style="display: none;">
+            <p>No questions matched your search query. Try keywords like "laser", "cable", "warranty", or "cushions".</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FLOATING QUICK-ORDER BAR (Appears on Scroll) -->
+    <div class="floating-quick-bar" id="floating-quick-bar" aria-hidden="true">
+      <div class="wrap floating-quick-bar-inner">
+        <div class="quick-bar-info">
+          <span class="quick-bar-thumb" id="quick-bar-thumb">🎧</span>
+          <div class="quick-bar-text">
+            <strong class="quick-bar-title">AeroPulse Pro 7</strong>
+            <span class="quick-bar-subtitle" id="quick-bar-subtitle">Cyber Cyan • Sunset Gold Bezel</span>
+          </div>
+        </div>
+        <div class="quick-bar-actions">
+          <div class="quick-bar-price">
+            <span class="curr">₹</span><span class="amount" id="quick-bar-price">14,999</span>
+          </div>
+          <button type="button" id="quick-bar-add-btn" class="btn btn-primary btn-sm btn-glow">
+            Add to Bag
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- INTERACTIVE AUTHENTICATION MODAL (Sign In / Register / Log In / Log Out) -->
+  <div class="modal-backdrop" id="auth-modal-backdrop" aria-hidden="true"></div>
+  <div class="modal-dialog auth-modal-dialog" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" aria-hidden="true">
+    <div class="modal-header">
+      <div class="auth-tabs-nav" role="tablist">
+        <button type="button" class="auth-tab-btn active" id="tab-login-btn" role="tab" aria-selected="true" aria-controls="auth-login-pane">
+          Sign In
+        </button>
+        <button type="button" class="auth-tab-btn" id="tab-register-btn" role="tab" aria-selected="false" aria-controls="auth-register-pane">
+          Create Account
+        </button>
+      </div>
+      <button type="button" id="close-auth-modal-btn" class="icon-btn" aria-label="Close authentication dialog">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Quick Evaluator 1-Click Demo Sign-In -->
+    <div class="demo-account-banner">
+      <div class="demo-info">
+        <span>⚡ Quick Intern Evaluator Access:</span>
+        <button type="button" id="quick-demo-login-btn" class="btn btn-sm btn-ghost demo-login-btn">
+          Sign In as <strong>Prashansa Raut</strong> (One-Click)
+        </button>
+      </div>
+    </div>
+
+    <!-- Pane 1: Sign In (Log In) Form -->
+    <div class="auth-pane active" id="auth-login-pane" role="tabpanel" aria-labelledby="tab-login-btn">
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label for="login-email" class="form-label">Email Address *</label>
+          <input type="email" id="login-email" class="form-input" placeholder="e.g. prashansa.raut@example.com" required>
+          <span class="field-error" id="login-email-error"></span>
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="login-password" class="form-label">Password *</label>
+            <button type="button" class="toggle-password-btn" data-target="login-password" aria-label="Show or hide password">Show</button>
+          </div>
+          <input type="password" id="login-password" class="form-input" placeholder="Enter your password" required>
+          <span class="field-error" id="login-password-error"></span>
+        </div>
+
+        <div class="auth-options-row">
+          <label class="remember-label">
+            <input type="checkbox" id="login-remember" checked>
+            <span>Keep me signed in</span>
+          </label>
+          <a href="#configurator-section" class="forgot-link" id="forgot-password-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" id="submit-login-btn" class="btn btn-primary btn-block btn-large" style="margin-top: 1rem;">
+          <span>Sign In to AeroPulse</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Pane 2: Create Account (Register) Form -->
+    <div class="auth-pane" id="auth-register-pane" role="tabpanel" aria-labelledby="tab-register-btn" hidden>
+      <form id="register-form" novalidate>
+        <div class="form-group">
+          <label for="register-name" class="form-label">Full Name *</label>
+          <input type="text" id="register-name" class="form-input" placeholder="e.g. Prashansa Raut" required>
+          <span class="field-error" id="register-name-error"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="register-email" class="form-label">Email Address *</label>
+          <input type="email" id="register-email" class="form-input" placeholder="e.g. prashansa@example.com" required>
+          <span class="field-error" id="register-email-error"></span>
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="register-password" class="form-label">Create Password *</label>
+            <button type="button" class="toggle-password-btn" data-target="register-password" aria-label="Show or hide password">Show</button>
+          </div>
+          <input type="password" id="register-password" class="form-input" placeholder="At least 6 characters" required>
+          <div class="password-strength-wrap">
+            <div class="strength-track">
+              <div class="strength-bar" id="strength-bar"></div>
+            </div>
+            <span class="strength-text" id="strength-text">Password strength: Empty</span>
+          </div>
+          <span class="field-error" id="register-password-error"></span>
+        </div>
+
+        <div class="auth-options-row">
+          <label class="remember-label">
+            <input type="checkbox" id="register-terms" required checked>
+            <span>I accept Studio Warranty & Audio Trial Terms</span>
+          </label>
+        </div>
+
+        <button type="submit" id="submit-register-btn" class="btn btn-primary btn-block btn-large" style="margin-top: 1rem;">
+          <span>Create VIP Studio Account</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SAVED BUILDS MODAL (Accessed from User Profile) -->
+  <div class="modal-backdrop" id="saved-builds-modal-backdrop" aria-hidden="true"></div>
+  <div class="modal-dialog saved-builds-modal-dialog" id="saved-builds-modal" role="dialog" aria-modal="true" aria-labelledby="saved-builds-title" aria-hidden="true">
+    <div class="modal-header">
+      <h2 id="saved-builds-title" class="modal-title">My Saved Studio Builds</h2>
+      <button type="button" id="close-saved-builds-btn" class="icon-btn" aria-label="Close saved builds">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="saved-builds-body" id="saved-builds-body">
+      <!-- List populated dynamically via JS -->
+      <div class="empty-saved-builds" id="empty-saved-builds">
+        <span style="font-size: 2.5rem;">💾</span>
+        <p>No saved configurations yet. Customize your headphones and click the save button in the customizer to store them here!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE-OVER SHOPPING CART DRAWER -->
+  <div class="cart-backdrop" id="cart-backdrop" aria-hidden="true"></div>
+  <aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true">
+    <div class="cart-header">
+      <div class="cart-title-wrap">
+        <h2 id="cart-title" class="cart-title">Your Studio Bag</h2>
+        <span class="cart-items-count-badge" id="cart-items-count-badge">0 Items</span>
+      </div>
+      <button type="button" id="close-cart-btn" class="icon-btn" aria-label="Close Shopping Bag">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress Threshold -->
+    <div class="shipping-progress-banner">
+      <div class="shipping-info-text" id="shipping-progress-text">
+        Add items to unlock <strong>Free Insured Express Delivery</strong>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="shipping-progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Cart Items Scrollable List -->
+    <div class="cart-items-container" id="cart-items-container">
+      <div class="cart-empty-state" id="cart-empty-state">
+        <div class="empty-cart-icon">🎧</div>
+        <h3>Your studio bag is empty</h3>
+        <p>Customize your AeroPulse headphones and click 'Add Custom Build to Bag' to get started.</p>
+        <button type="button" class="btn btn-primary btn-sm" id="empty-state-cta">Configure Now</button>
+      </div>
+    </div>
+
+    <!-- Cart Footer with Pricing & Checkout -->
+    <div class="cart-footer" id="cart-footer">
+      <div class="promo-box">
+        <div class="promo-input-group">
+          <input type="text" id="promo-input" class="form-input promo-input" placeholder="Promo code (Try YUVA25)" uppercase>
+          <button type="button" id="apply-promo-btn" class="btn btn-sm btn-subtle">Apply</button>
+        </div>
+        <div class="promo-feedback" id="promo-feedback" aria-live="polite"></div>
+      </div>
+
+      <div class="cart-summary-lines">
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <span id="cart-subtotal-val">₹0</span>
+        </div>
+        <div class="summary-line" id="discount-line" style="display: none; color: #10b981;">
+          <span>Special Discount (<span id="discount-pct-label">0%</span>)</span>
+          <span id="cart-discount-val">-₹0</span>
+        </div>
+        <div class="summary-line">
+          <span>Estimated GST (18%)</span>
+          <span id="cart-tax-val">₹0</span>
+        </div>
+        <div class="summary-line">
+          <span>Express Shipping</span>
+          <span id="cart-shipping-val" style="color: #10b981;">FREE</span>
+        </div>
+        <div class="summary-line total-line">
+          <strong>Grand Total</strong>
+          <strong id="cart-grand-total-val" class="highlight-total">₹0</strong>
+        </div>
+      </div>
+
+      <button type="button" id="checkout-btn" class="btn btn-primary btn-large btn-block">
+        <span>Proceed to Secure Checkout</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- INTERACTIVE REVIEW MODAL (Accessible Dialog) -->
+  <div class="modal-backdrop" id="review-modal-backdrop" aria-hidden="true"></div>
+  <div class="modal-dialog" id="review-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-header">
+      <h2 id="modal-title" class="modal-title">Share Your Acoustic Experience</h2>
+      <button type="button" id="close-review-modal-btn" class="icon-btn" aria-label="Close review dialog">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <form id="review-form" novalidate>
+      <div class="form-group">
+        <label class="form-label" id="star-picker-label">Rating</label>
+        <div class="star-rating-picker" role="radiogroup" aria-labelledby="star-picker-label" id="star-picker">
+          <button type="button" class="star-pick-btn" data-rating="1" aria-label="1 Star">★</button>
+          <button type="button" class="star-pick-btn" data-rating="2" aria-label="2 Stars">★</button>
+          <button type="button" class="star-pick-btn" data-rating="3" aria-label="3 Stars">★</button>
+          <button type="button" class="star-pick-btn" data-rating="4" aria-label="4 Stars">★</button>
+          <button type="button" class="star-pick-btn active" data-rating="5" aria-label="5 Stars">★</button>
+        </div>
+        <span class="rating-descriptor" id="rating-descriptor">5 Stars — Exceptional Masterpiece!</span>
+      </div>
+
+      <div class="form-group">
+        <label for="review-author-name" class="form-label">Full Name *</label>
+        <input type="text" id="review-author-name" class="form-input" placeholder="e.g. Prashansa Raut" required>
+        <span class="field-error" id="name-error-msg"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="review-email" class="form-label">Email Address * (Never made public)</label>
+        <input type="email" id="review-email" class="form-input" placeholder="name@domain.com" required>
+        <span class="field-error" id="email-error-msg"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="review-build-type" class="form-label">Your Custom Colorway</label>
+        <select id="review-build-type" class="form-select">
+          <option value="Cyber Cyan • CoolMesh">Cyber Cyan • CoolMesh</option>
+          <option value="Obsidian Matte • Lambskin">Obsidian Matte • Lambskin</option>
+          <option value="Titanium Frost • Gold Accent">Titanium Frost • Gold Accent</option>
+          <option value="Imperial Emerald • Memory Foam">Imperial Emerald • Memory Foam</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="review-comment" class="form-label">Your Review *</label>
+          <span class="char-count" id="comment-char-count">0 / 250</span>
+        </div>
+        <textarea id="review-comment" class="form-textarea" rows="4" maxlength="250" placeholder="Describe the sound stage, comfort, ANC efficiency, or laser engraving..." required></textarea>
+        <span class="field-error" id="comment-error-msg"></span>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="cancel-review-btn" class="btn btn-secondary">Cancel</button>
+        <button type="submit" id="submit-review-btn" class="btn btn-primary">
+          <span>Publish Verified Review</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- FLOATING TOAST NOTIFICATION STACK -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="wrap footer-content">
+      <div class="footer-col brand-col">
+        <div class="logo-icon-wrapper mini">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+          </svg>
+        </div>
+        <span class="footer-brand-title">AeroPulse Studio</span>
+        <p class="footer-desc">
+          Bespoke handcrafted wireless headphones for uncompromising audio purists. Engineered with precision DOM manipulation, Web Audio synthesis, and modern vanilla JavaScript.
+        </p>
+        <div class="intern-credit">
+          Developed by <strong>Prashansa Raut</strong> • Frontend Web Developer Intern (Yuva Intern)
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Studio Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="#configurator-section">360° Customizer</a></li>
+          <li><a href="#equalizer-section">DSP Equalizer</a></li>
+          <li><a href="#specs-section">Hardware Specs</a></li>
+          <li><a href="#comparison-section">Flagship Benchmark</a></li>
+          <li><a href="#reviews-section">Community Reviews</a></li>
+          <li><a href="#faq-section">FAQ & Support</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">JavaScript Techniques</h4>
+        <ul class="footer-tech-list">
+          <li><span class="tech-tag">Web Audio API</span></li>
+          <li><span class="tech-tag">Client Auth & Sessions</span></li>
+          <li><span class="tech-tag">3D Parallax Tilt</span></li>
+          <li><span class="tech-tag">Reactive SVG DOM</span></li>
+          <li><span class="tech-tag">Hotspot Tooltips</span></li>
+          <li><span class="tech-tag">Live FAQ Search</span></li>
+          <li><span class="tech-tag">LocalStorage API</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom wrap">
+      <p>© 2026 AeroPulse Audio Labs. All rights reserved. Crafted for Yuva Intern Week 3 Task.</p>
+      <p class="privacy-note">Zero cookies tracked. High-fidelity web engineering.</p>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript File -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -11,7 +11,7 @@
 
 ---
 
-##  Live Demo & Author
+## 🎧 Live Demo & Author
 
 - **Author**: Prashansa Raut
 - **Role**: Frontend Web Developer Intern
@@ -21,7 +21,7 @@
 
 ---
 
-##  Key Interactive & Realistic Features
+## 🌟 Key Interactive & Realistic Features
 
 ### 1. Real-Time SVG Vector Customizer & 3D Mouse Parallax (360° Studio)
 - **3D Cursor Parallax & Dynamic Light Glare**: Moving the mouse over the canvas smoothly tilts the headphone in 3D perspective (`rotateX`, `rotateY`) with specular light reflections following the cursor.
@@ -82,7 +82,7 @@
 
 ---
 
-##  Project Structure
+## 📂 Project Structure
 
 ```text
 aeropulse-audio-studio/
@@ -102,7 +102,7 @@ aeropulse-audio-studio/
 
 ---
 
-##  Running the Project Locally
+## 🚀 Running the Project Locally
 
 No build step, bundlers, or Node.js packages are required!
 
@@ -114,7 +114,7 @@ No build step, bundlers, or Node.js packages are required!
 
 ---
 
-##  Author
+## 👤 Author
 
 **Prashansa Raut**  
 *Frontend Web Developer Intern*  

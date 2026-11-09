@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%" id="headphone-svg">
+  <defs>
+    <!-- Background Ambient Glow -->
+    <filter id="ambient-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="25" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Color Gradients dynamically controlled by CSS/JS variables -->
+    <linearGradient id="primary-metal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="var(--hp-color-light, #38bdf8)" />
+      <stop offset="50%" stop-color="var(--hp-color-main, #0284c7)" />
+      <stop offset="100%" stop-color="var(--hp-color-dark, #0369a1)" />
+    </linearGradient>
+
+    <linearGradient id="headband-cushion-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <linearGradient id="chassis-metal-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#94a3b8" />
+      <stop offset="50%" stop-color="#cbd5e1" />
+      <stop offset="100%" stop-color="#64748b" />
+    </linearGradient>
+
+    <radialGradient id="cup-face-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="var(--hp-color-light, #38bdf8)" stop-opacity="0.9" />
+      <stop offset="70%" stop-color="var(--hp-color-main, #0284c7)" />
+      <stop offset="100%" stop-color="var(--hp-color-dark, #0369a1)" />
+    </radialGradient>
+
+    <!-- Subtle Drop Shadow -->
+    <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Ambient Light Reflection -->
+  <ellipse id="hp-ambient-light" cx="250" cy="270" rx="190" ry="170" fill="var(--hp-color-main, #0284c7)" opacity="0.18" filter="url(#ambient-glow)" />
+
+  <g id="headphone-assembly" filter="url(#soft-shadow)">
+    <!-- Top Headband Arch -->
+    <path id="hp-headband-steel" d="M 120 280 C 120 120, 380 120, 380 280" fill="none" stroke="url(#chassis-metal-grad)" stroke-width="16" stroke-linecap="round" />
+    
+    <!-- Padded Inner Headband Cushion -->
+    <path id="hp-headband-cushion" d="M 150 250 C 150 145, 350 145, 350 250" fill="none" stroke="var(--cushion-color, #1e293b)" stroke-width="26" stroke-linecap="round" />
+
+    <!-- Top Engraving Area Pill Badge -->
+    <rect id="hp-engraving-badge" x="180" y="112" width="140" height="28" rx="14" fill="#0f172a" stroke="url(#chassis-metal-grad)" stroke-width="2" />
+    <text id="hp-engraving-text" x="250" y="131" text-anchor="middle" fill="var(--hp-color-light, #38bdf8)" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" letter-spacing="3">AEROPULSE</text>
+
+    <!-- Left Adjuster Yoke Fork -->
+    <g id="hp-yoke-left">
+      <rect x="110" y="240" width="16" height="48" rx="6" fill="url(#chassis-metal-grad)" />
+      <path d="M 118 280 C 118 310, 80 320, 80 345" fill="none" stroke="url(#chassis-metal-grad)" stroke-width="8" stroke-linecap="round" />
+    </g>
+
+    <!-- Right Adjuster Yoke Fork -->
+    <g id="hp-yoke-right">
+      <rect x="374" y="240" width="16" height="48" rx="6" fill="url(#chassis-metal-grad)" />
+      <path d="M 382 280 C 382 310, 420 320, 420 345" fill="none" stroke="url(#chassis-metal-grad)" stroke-width="8" stroke-linecap="round" />
+    </g>
+
+    <!-- Left Ear Cushion (Behind cup) -->
+    <ellipse id="hp-cushion-left" cx="88" cy="355" rx="30" ry="62" fill="var(--cushion-color, #1e293b)" stroke="#0f172a" stroke-width="3" />
+
+    <!-- Right Ear Cushion (Behind cup) -->
+    <ellipse id="hp-cushion-right" cx="412" cy="355" rx="30" ry="62" fill="var(--cushion-color, #1e293b)" stroke="#0f172a" stroke-width="3" />
+
+    <!-- Left Earcup Main Body -->
+    <g id="hp-earcup-group-left">
+      <!-- Outer Shell -->
+      <ellipse id="hp-cup-shell-left" cx="106" cy="355" rx="34" ry="58" fill="url(#primary-metal-grad)" stroke="#0f172a" stroke-width="4" />
+      <!-- Accent Chamfer Ring -->
+      <ellipse id="hp-cup-ring-left" cx="106" cy="355" rx="27" ry="46" fill="none" stroke="var(--accent-ring-color, #f59e0b)" stroke-width="3.5" />
+      <!-- Inner Face Disc -->
+      <ellipse id="hp-cup-face-left" cx="106" cy="355" rx="22" ry="38" fill="url(#cup-face-grad)" />
+      <!-- Center Pivot Cap -->
+      <circle cx="106" cy="355" r="9" fill="#0f172a" stroke="url(#chassis-metal-grad)" stroke-width="2" />
+    </g>
+
+    <!-- Right Earcup Main Body -->
+    <g id="hp-earcup-group-right">
+      <!-- Outer Shell -->
+      <ellipse id="hp-cup-shell-right" cx="394" cy="355" rx="34" ry="58" fill="url(#primary-metal-grad)" stroke="#0f172a" stroke-width="4" />
+      <!-- Accent Chamfer Ring -->
+      <ellipse id="hp-cup-ring-right" cx="394" cy="355" rx="27" ry="46" fill="none" stroke="var(--accent-ring-color, #f59e0b)" stroke-width="3.5" />
+      <!-- Inner Face Disc -->
+      <ellipse id="hp-cup-face-right" cx="394" cy="355" rx="22" ry="38" fill="url(#cup-face-grad)" />
+      <!-- Center Pivot Cap -->
+      <circle cx="394" cy="355" r="9" fill="#0f172a" stroke="url(#chassis-metal-grad)" stroke-width="2" />
+    </g>
+
+    <!-- Acoustic Wave Pulses (Interactive Animation Trigger) -->
+    <g id="hp-soundwaves" opacity="0.75">
+      <path class="wave wave-1" d="M 44 335 C 32 345, 32 365, 44 375" fill="none" stroke="var(--hp-color-light, #38bdf8)" stroke-width="3" stroke-linecap="round" />
+      <path class="wave wave-2" d="M 30 325 C 14 340, 14 370, 30 385" fill="none" stroke="var(--hp-color-light, #38bdf8)" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+      <path class="wave wave-1" d="M 456 335 C 468 345, 468 365, 456 375" fill="none" stroke="var(--hp-color-light, #38bdf8)" stroke-width="3" stroke-linecap="round" />
+      <path class="wave wave-2" d="M 470 325 C 486 340, 486 370, 470 385" fill="none" stroke="var(--hp-color-light, #38bdf8)" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+    </g>
+  </g>
+</svg>
