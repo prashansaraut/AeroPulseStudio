@@ -477,12 +477,14 @@ const AeroPulseApp = (() => {
       DOM.mobileMenuToggle.addEventListener('click', () => {
         playUiTick();
         const isOpen = DOM.mainNav.classList.toggle('open');
+        DOM.mobileMenuToggle.classList.toggle('active', isOpen);
         DOM.mobileMenuToggle.setAttribute('aria-expanded', isOpen);
       });
 
       DOM.mainNav.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
           DOM.mainNav.classList.remove('open');
+          DOM.mobileMenuToggle.classList.remove('active');
           DOM.mobileMenuToggle.setAttribute('aria-expanded', 'false');
         });
       });
