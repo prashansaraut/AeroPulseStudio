@@ -2141,12 +2141,17 @@ const AeroPulseApp = (() => {
       return;
     }
 
-    // Success: Extract username from email
-    const username = email.split('@')[0];
-    const formattedName = username.charAt(0).toUpperCase() + username.slice(1);
+    // Success: Extract or format name nicely from email
+    let formattedName = '';
+    if (email.toLowerCase().includes('prashansa')) {
+      formattedName = 'Prashansa Raut';
+    } else {
+      const username = email.split('@')[0].replace(/[._-]/g, ' ');
+      formattedName = username.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    }
 
     state.user.isLoggedIn = true;
-    state.user.name = formattedName;
+    state.user.name = formattedName || 'Studio Member';
     state.user.email = email;
     state.user.role = 'VIP Studio Member';
 
