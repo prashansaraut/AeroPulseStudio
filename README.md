@@ -1,121 +1,150 @@
-# AeroPulse Studio — Bespoke Audio Gear Configurator
+# AeroPulse Studio
 
-[![Yuva Intern](https://img.shields.io/badge/Yuva%20Intern-Week%203%20Task-6366f1.svg)](https://yuvaintern.com)
-[![Frontend](https://img.shields.io/badge/Role-Frontend%20Developer%20Intern-06b6d4.svg)]()
-[![Pure Vanilla JS](https://img.shields.io/badge/JavaScript-ES6%2B%20(No%20Frameworks)-f59e0b.svg)]()
-[![Web Audio API](https://img.shields.io/badge/Web%20Audio%20API-3Band%20Biquad%20Filters-10b981.svg)]()
-[![Semantic HTML5](https://img.shields.io/badge/HTML5-Accessible%20%26%20Semantic-10b981.svg)]()
-[![Modern CSS3](https://img.shields.io/badge/CSS3-3D%20Parallax%20%26%20Glassmorphism-3b82f6.svg)]()
+An interactive product configurator for a fictional pair of wireless headphones, the **AeroPulse Pro 7**. It is my Week 3 task: *Integrating JavaScript for Interactive User Experience* (Yuva Intern, Frontend Web Developer Intern).
 
-> An enterprise-grade, interactive web application engineered from the ground up using **Vanilla JavaScript (ES6+)**, semantic HTML5, and modern CSS3. Features a real-time reactive vector customizer with 3D mouse parallax, Web Audio API live ambient sound synthesizer with 3-band biquad filtering, multi-perspective exploded anatomy inspection, slide-over shopping bag with dynamic financial calculation, live search FAQ, regex form validation, accessible modals, and toast notification queues.
+Built with plain **HTML5, CSS3 and vanilla JavaScript**. No frameworks and no JavaScript libraries.
 
----
+![AeroPulse Studio on desktop](report-images/desktop-hero.png)
 
-## 🎧 Live Demo & Author
+## Quick links
 
-- **Author**: Prashansa Raut
-- **Role**: Frontend Web Developer Intern
-- **Programme**: Yuva Intern Virtual Internship
-- **Task**: Week 3 — Integrating JavaScript for Interactive User Experience
-- **Live Demo**: [Deploy with GitHub Pages](https://github.com) *(Add your GitHub Pages URL here)*
+| What | Where |
+|---|---|
+| Full technical report (Word) | [`Week3_Report_AeroPulse_Studio.docx`](Week3_Report_AeroPulse_Studio.docx) |
+| Full technical report (Markdown) | [`WEEK3_REPORT.md`](WEEK3_REPORT.md) |
+| Automated tests (28 tests, all passing) | [`tests/dom-tests.js`](tests/dom-tests.js) |
+| JavaScript source | [`app.js`](app.js) |
 
----
+## What it does
 
-## 🌟 Key Interactive & Realistic Features
+- **Configurator:** pick a colour, accent ring and ear cushions; the SVG headphones recolour and the price counts up or down live.
+- **Live laser engraving:** text typed in the box appears on the headband as you type (12 characters, filtered and upper-cased).
+- **Three views and 3D tilt:** Studio Front, 45° Profile and Exploded Anatomy; the product tilts with the mouse.
+- **Web Audio synthesizer and 3-band equalizer:** a chord generated in the browser plays through bass, mid and treble filters, controlled by sliders and four presets.
+- **Shopping bag:** slide-out drawer, quantities, promo codes (`YUVA25`, `AERO10`), free-shipping progress bar and 18% GST totals.
+- **Accounts and saved builds:** sign in and register with live validation and a password strength meter; save builds and share them by link.
+- **FAQ search, theme toggle, toasts, scroll-aware navigation** and a floating quick-order bar on phones.
 
-### 1. Real-Time SVG Vector Customizer & 3D Mouse Parallax (360° Studio)
-- **3D Cursor Parallax & Dynamic Light Glare**: Moving the mouse over the canvas smoothly tilts the headphone in 3D perspective (`rotateX`, `rotateY`) with specular light reflections following the cursor.
-- **Multi-Perspective View Switcher**:
-  - `Studio Front`: Default clean frontal studio angle.
-  - `45° Profile`: Rotates the headphones to inspect the laser plaque and damping gimbal in 3D.
-  - `Exploded Anatomy`: Smoothly slides the earcups and cushions apart with spring physics, revealing the internal gold voice coils and 40mm beryllium diaphragm!
-- **Interactive Inspection Hotspots**: 4 pulsing inspection pins with animated rings. Clicking reveals an accessible glassmorphic popover tooltip explaining acoustic engineering.
-- **Curated Signature Editions**: 1-click aesthetic combinations (*Cyberpunk Neon, Obsidian Stealth, Champagne Royale, Nordic Frost, Imperial Heritage*) that automatically coordinate swatches, bezels, and cushion fabrics.
-- **Live Laser Engraving**: Sanitizes and mirrors input live onto the surgical-steel headband plaque via reactive SVG DOM text nodes.
-- **Dynamic Price Counter**: Numerical ticker smoothly counts between price states using `requestAnimationFrame` interpolation.
+## How to run
 
-### 2. Live Web Audio API Synthesizer & Soundstage Equalizer
-- **Real-Time Sound Synthesis**: Pure client-side audio synthesis using `AudioContext`. Generates relaxing multi-harmonic chord tones with zero external sound files.
-- **Hardware-Accelerated 3-Band Biquad Filters**:
-  - `lowshelf` filter connected to the Bass Boost (60Hz) slider.
-  - `peaking` filter connected to the Mid Presence (1kHz) slider.
-  - `highshelf` filter connected to the Treble Air (10kHz) slider.
-  - *Moving the sliders in real-time audibly and visibly shapes the sound and visualizer bars!*
-- **Volume & Haptic Sound Controls**: Master synthesizer volume slider and interface click haptics (with mute toggle).
-- **16-Band Harmonic Visualizer**: Oscillating frequency bars reacting to real-time harmonic math and active EQ parameters.
+No build step is needed. Download or clone the repository and open `index.html` in a browser. Click the **Synthesize Audio** button to start the sound (browsers only allow audio after a click).
 
-### 3. Head-to-Head Flagship Benchmark Matrix
-- Responsive comparative table comparing AeroPulse Pro 7 vs Sony WH-1000XM5 vs Apple AirPods Max vs Bose QuietComfort Ultra.
+Shareable build links use URL parameters, for example `index.html?color=gold&engraving=NAME`.
 
-### 4. Slide-Over Interactive Shopping Bag Drawer
-- **Persistent State**: Items added to the bag are stored in browser `localStorage`.
-- **Quantity Management**: Incremental stepping (`+` / `-`) and item removal with automatic subtotal, 18% GST calculation, and grand total updates.
-- **Free Shipping Threshold Bar**: Dynamic progress meter showing remaining amount to unlock free express shipping.
-- **Coupon & Promo Engine**: Real-time coupon validator with shake animation feedback on errors and percentage deduction for valid codes (`YUVA25` for 25% off, `AERO10` for 10% off).
-- **Checkout Simulator**: Non-blocking asynchronous checkout state with loading indicator and confirmation toast.
+## Project structure
 
-### 5. Floating Quick-Order Sticky Bar
-- Automatically slides into view when the user scrolls past the main purchase area, allowing instant ordering without scrolling back to the top.
-
-### 6. Real-Time Live FAQ Search
-- Search bar that dynamically filters and highlights questions as you type with match counters and empty states.
-
-### 7. Interactive Review Modal & Regex Form Validation
-- **Interactive 5-Star Rating Picker**: Real-time hover preview and click selection with custom dynamic descriptor strings.
-- **Client-Side Validation Engine**: Validates full name (min 3 characters), email address (RFC compliance regex), and review feedback (min 15 characters).
-- **Dynamic Card Prepending**: Valid reviews are sanitized (preventing XSS) and injected directly at the top of the reviews grid with entrance animation.
-
-### 8. Shareable Custom Build Links
-- Serializes custom configurations into URL query parameters (`?color=...&accent=...&cushion=...&engraving=...`) and copies to clipboard for 1-click sharing.
-
-### 9. Client Authentication & Session Management (Sign In / Sign Out & Log In / Log Out)
-- **Modal Dialog with Dual Tabs**: Seamlessly toggle between "Sign In" and "Create Account" with tab animations and keyboard trap support.
-- **One-Click Quick Demo Sign-In**: Instant sign-in pre-configured as intern author **Prashansa Raut** (`prashansa.raut@yuva-intern.org`).
-- **Interactive Password Controls**: Live show/hide password toggle button and real-time password strength meter checking character length, uppercase, numbers, and symbols.
-- **User Avatar & Profile Dropdown**: Once logged in, the header displays a personalized avatar with user initials and a green online status indicator. Clicking opens a dropdown menu with user details, VIP badge, direct access to saved builds, bag link, and a red "Sign Out" option.
-- **Persistent Client Sessions**: Authentication status and credentials are securely maintained in browser `localStorage` across page reloads.
-
-### 10. "My Saved Builds" Profile Storage
-- **Save to Account**: Clicking the Save button in the customizer stores the active build directly into the user's profile and browser storage.
-- **Saved Builds Manager Dialog**: Review all saved custom builds with color swatch previews, full hardware specifications, pricing, and save dates.
-- **One-Click Instant Load**: Clicking "Load" on any saved build automatically restores that configuration in the 360° visualizer, updates the SVG DOM, and recalculates pricing in real time!
-
----
-
-## 📂 Project Structure
-
-```text
-aeropulse-audio-studio/
-├── index.html              # Semantic HTML5 with accessible landmarks & dialogs
-├── styles.css              # Mobile-first CSS tokens, 3D parallax, glassmorphism
-├── app.js                  # Modular Vanilla JS controller & Web Audio engine
-├── README.md               # Project documentation & GitHub guide
-└── assets/
-    ├── favicon.svg         # High-resolution vector favicon
-    ├── illustrations/
-    │   └── headphone.svg   # Multi-layered standalone vector artwork
-    └── icons/              # 11 hand-crafted SVG UI icons
-        ├── cart.svg, sun.svg, moon.svg, star.svg, trash.svg,
-        ├── close.svg, check.svg, sparkles.svg, shield.svg,
-        ├── truck.svg, volume.svg
+```
+AeroPulseStudio/
+├── index.html          Structure, ARIA labels, dialogs, SVG headphones
+├── styles.css          Design tokens, dark/light themes, 5 responsive breakpoints
+├── app.js              All interactivity (22 documented sections)
+├── tests/
+│   └── dom-tests.js    28 automated DOM tests
+├── report-images/      Wireframes, screenshots and diagrams used in the report
+├── WEEK3_REPORT.md     Technical report (Markdown)
+└── Week3_Report_AeroPulse_Studio.docx   Technical report (Word)
 ```
 
----
+## JavaScript code examples
 
-## 🚀 Running the Project Locally
+### One shared state object
 
-No build step, bundlers, or Node.js packages are required!
+All values that affect the interface live in a single object. Event handlers update it, then small render functions refresh the page, so different parts of the UI cannot disagree.
 
-1. Open File Explorer and navigate to:
-   ```text
-   C:\Users\MANTHAN RAUT\.gemini\antigravity\scratch\aeropulse-audio-studio\
-   ```
-2. Double-click `index.html` to open it in Chrome, Edge, Safari, or Firefox.
+```javascript
+const state = {
+  config: { basePrice: 14999, color: { /* ... */ }, accent: { /* ... */ },
+            cushion: { /* ... */ }, engraving: 'AEROPULSE', addons: new Map() },
+  cart: [],
+  promo: { code: '', discountPercent: 0, applied: false },
+  eq: { preset: 'neutral', bass: 0, mid: 0, treble: 0, isStreaming: true },
+  view: 'front',          // 'front' | 'profile' | 'exploded'
+  theme: 'dark',
+  user: { isLoggedIn: false, name: '', email: '', savedBuilds: [] }
+};
+```
 
----
+### Live engraving (event handling and DOM manipulation)
 
-## 👤 Author
+```javascript
+const updateEngraving = (text) => {
+  const cleaned = (text || '').trim();
+  state.config.engraving = cleaned;
+  DOM.engravingSvgText.textContent = cleaned.length > 0 ? cleaned : 'AEROPULSE';
+  DOM.engravingCount.textContent = `${cleaned.length} / 12 chars`;
+};
+```
 
-**Prashansa Raut**  
-*Frontend Web Developer Intern*  
-*Yuva Intern Virtual Internship Programme*
+`textContent` is used instead of `innerHTML`, so typed text can never be interpreted as HTML.
+
+### Cart totals and promo codes
+
+```javascript
+const discountAmount = state.promo.applied
+  ? Math.round(subtotal * state.promo.discountPercent) : 0;
+const discountedSubtotal = Math.max(0, subtotal - discountAmount);
+const taxAmount  = Math.round(discountedSubtotal * 0.18);
+const grandTotal = discountedSubtotal + taxAmount;
+```
+
+### Web Audio equalizer chain
+
+```javascript
+audio.bassFilter.type   = 'lowshelf';  audio.bassFilter.frequency.value   = 120;
+audio.midFilter.type    = 'peaking';   audio.midFilter.frequency.value    = 1000;
+audio.trebleFilter.type = 'highshelf'; audio.trebleFilter.frequency.value = 7500;
+
+audio.bassFilter.connect(audio.midFilter);
+audio.midFilter.connect(audio.trebleFilter);
+audio.trebleFilter.connect(audio.masterGain);
+audio.masterGain.connect(audio.ctx.destination);
+```
+
+Moving a slider changes the matching filter's gain while the sound plays, so the effect is heard immediately. Section 5 of the [report](WEEK3_REPORT.md) explains these and the other features (3D tilt, form validation, FAQ search, shareable links) in detail.
+
+## Testing
+
+The tests in [`tests/dom-tests.js`](tests/dom-tests.js) load the real `index.html` and `app.js` into jsdom (a simulated browser DOM) with a mocked Web Audio API, then click, type and submit forms the way a user would.
+
+```
+npm install jsdom        # Node 20 or newer
+node tests/dom-tests.js
+```
+
+**Result: 28 of 28 tests pass.** They cover:
+
+| Area | Examples checked |
+|---|---|
+| Configurator and pricing | Colour, accent and cushion change the price from 14,999 to 17,049 |
+| Engraving | `yuva intern!` becomes `YUVA INTERN`; input limited to 12 characters |
+| Views and theme | View buttons toggle the right classes; theme choice is saved |
+| Audio | 4 oscillators and 3 filters at 120, 1000 and 7500 Hz; bass +4 sets filter gain to 10 |
+| Cart | GST totals, quantity, `localStorage` persistence, `Esc` closes the drawer |
+| Promo codes | `YUVA25` gives 15,089; `AERO10` gives 18,106; invalid and empty codes show errors |
+| Forms | Empty and invalid login and register input; password strength weak, medium, strong |
+| Accounts | Password is never stored; saved builds and badge count update |
+| Shared links | `?color=gold&engraving=PRASHANSA` restores the build; an invalid colour is ignored |
+
+The tests run in a simulated browser, so they do not check real sound output, visual rendering or physical devices. See section 9 of the report.
+
+## Challenges and solutions (summary)
+
+| Problem | Solution |
+|---|---|
+| No sound on first click | Create the `AudioContext` on a user click and call `resume()` if suspended |
+| Header overflowed on phones | At 640 px the account button shrinks to an icon |
+| Prices could disagree between panel, bar and bag | One calculation and render path driven by `state` |
+| Typed text could inject HTML | `textContent` plus an engraving character filter |
+| Broken or malicious share links | Colour names are checked against known options; engraving is sanitized |
+
+The full list is in section 12 of the report.
+
+## Known limitations
+
+- Sign-in is a front-end simulation with no server, so it is not secure; passwords are never stored.
+- The spectrum bars react to the equalizer settings but are not an analysis of the real audio signal.
+- `app.js` is one large file; splitting it into ES modules is the next step.
+
+## Author
+
+**Prashansa Raut**, Frontend Web Developer Intern, Yuva Intern
